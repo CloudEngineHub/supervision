@@ -2672,17 +2672,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#0291-jun-23-2026_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        0.29.1 Jun 23, 2026
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#0290post0-jun-17-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3167,17 +3156,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#0291-jun-23-2026_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        0.29.1 Jun 23, 2026
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#0290post0-jun-17-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3603,10 +3581,12 @@
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
 <h3 id="0291-jun-23-2026">0.29.1 <small>Jun 23, 2026</small><a class="headerlink" href="#0291-jun-23-2026" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Added <a href="https://github.com/roboflow/supervision/pull/2275">#2275</a>: <code>show_progress: bool = False</code> parameter to all <code>sv.DetectionDataset</code> load and save methods — <code>from_coco</code>, <code>from_yolo</code>, <code>from_pascal_voc</code>, <code>as_coco</code>, <code>as_yolo</code>, <code>as_pascal_voc</code>, and <code>save_dataset_images</code>. When <code>True</code>, a <code>tqdm.auto</code> progress bar is shown (works in terminal and Jupyter). Defaults to <code>False</code> for full backward compatibility; no new dependencies.</li>
-</ul>
-<h3 id="0291-jun-23-2026_1">0.29.1 <small>Jun 23, 2026</small><a class="headerlink" href="#0291-jun-23-2026_1" title="Permanent link">&para;</a></h3>
-<ul>
+<li>
+<p>Added <a href="https://github.com/roboflow/supervision/pull/2275">#2275</a>: <code>show_progress: bool = False</code> parameter to all <code>sv.DetectionDataset</code> load and save methods — <code>from_coco</code>, <code>from_yolo</code>, <code>from_pascal_voc</code>, <code>as_coco</code>, <code>as_yolo</code>, <code>as_pascal_voc</code>, and <code>save_dataset_images</code>. When <code>True</code>, a <code>tqdm.auto</code> progress bar is shown (works in terminal and Jupyter). Defaults to <code>False</code> for full backward compatibility; no new dependencies.</p>
+</li>
+<li>
+<p>Added <a href="https://github.com/roboflow/supervision/issues/2027">#2027</a>: <a href="https://supervision.roboflow.com/latest/detection/tools/inference_slicer/#supervision.detection.tools.inference_slicer.InferenceSlicer"><code>sv.InferenceSlicer</code></a> now accepts an open rasterio-style dataset in addition to in-memory images. Each tile is read lazily via a windowed read instead of loading the whole image, enabling tiled inference on multi-GB aerial/drone GeoTIFFs without running out of memory. Detection is duck-typed, so <code>rasterio</code> stays an optional dependency installable via <code>pip install "supervision[geotiff]"</code> and the core library imports no rasterio symbols. A geographic (non-projected) CRS raises <code>ValueError</code>.</p>
+</li>
 <li>
 <p>Added <a href="https://github.com/roboflow/supervision/pull/2338">#2338</a>: <a href="https://supervision.roboflow.com/latest/keypoint/core/#supervision.key_points.core.KeyPoints.with_nms"><code>sv.KeyPoints.with_nms</code></a> — non-maximum suppression for keypoint detections. Derives axis-aligned bounding boxes from valid (non-zero and visible) keypoints and applies <code>box_non_max_suppression</code>. Requires <code>detection_confidence</code>; supports class-aware and class-agnostic modes via <code>threshold</code>, <code>class_agnostic</code>, and <code>overlap_metric</code>.</p>
 </li>
@@ -3629,10 +3609,16 @@
 <p>Fixed <a href="https://github.com/roboflow/supervision/pull/2331">#2331</a>: <code>sv.Precision</code> and <code>sv.F1Score</code> now count predictions on background images (empty target set) as false positives, and count predictions of classes absent from ground truth as false positives under <code>MICRO</code> and <code>MACRO</code> averaging. Previously both edge cases were silently ignored, inflating scores. <code>WEIGHTED</code> averaging is unchanged — absent classes retain weight 0, consistent with scikit-learn. Users relying on previous scores should re-evaluate after upgrading; no API change is required.</p>
 </li>
 <li>
+<p>Added <a href="https://github.com/roboflow/supervision/pull/2299">#2299</a>: <a href="https://supervision.roboflow.com/latest/datasets/core/#supervision.dataset.core.DetectionDataset.from_labelme"><code>DetectionDataset.from_labelme</code></a> and <a href="https://supervision.roboflow.com/latest/datasets/core/#supervision.dataset.core.DetectionDataset.as_labelme"><code>DetectionDataset.as_labelme</code></a> for loading and exporting <a href="https://github.com/wkentaro/labelme">LabelMe</a> per-image JSON annotations, following the existing COCO/YOLO/VOC convention. <code>rectangle</code> shapes load as boxes and <code>polygon</code> shapes as masks; unsupported shape types are skipped with a warning. The mask round-trip is a polygon approximation, not bit-exact.</p>
+</li>
+<li>
 <p>Fixed <a href="https://github.com/roboflow/supervision/pull/2322">#2322</a>: COCO export now preserves all polygon parts for multi-component masks. Previously, only the first polygon was written when a non-crowd mask had disjoint segments; all parts are now included.</p>
 </li>
 <li>
 <p>Performance <a href="https://github.com/roboflow/supervision/pull/2339">#2339</a>: <code>sv.HaloAnnotator</code> now uses the same CompactMask painting path as <code>sv.MaskAnnotator</code> via a shared <code>_paint_masks_by_area</code> helper. On a 1080p frame with 30 CompactMask detections, <code>HaloAnnotator</code> runs approximately 4× faster; annotated output is unchanged.</p>
+</li>
+<li>
+<p>Added <a href="https://github.com/roboflow/supervision/pull/2284">#2284</a>: <a href="https://supervision.roboflow.com/latest/datasets/core/#supervision.dataset.core.DetectionDataset.from_createml"><code>DetectionDataset.from_createml</code></a> and <a href="https://supervision.roboflow.com/latest/datasets/core/#supervision.dataset.core.DetectionDataset.as_createml"><code>DetectionDataset.as_createml</code></a> add load and export support for the CreateML object-detection JSON format, alongside the existing COCO, YOLO, and Pascal VOC formats.</p>
 </li>
 <li>
 <p>Performance <a href="https://github.com/roboflow/supervision/pull/2330">#2330</a>: <code>sv.mask_to_xyxy</code> and <code>sv.KeyPoints.as_detections</code> are now vectorized. <code>mask_to_xyxy</code> uses batched occupancy-profile reductions instead of per-mask pixel scans; <code>KeyPoints.as_detections</code> computes all bounding boxes in a single batch operation. Both produce bit-identical results.</p>
@@ -5590,7 +5576,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 24, 2026 06:19:04 UTC">June 24, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 25, 2026 15:07:39 UTC">June 25, 2026</span>
   </span>
 
     
@@ -5618,9 +5604,9 @@
     
     <nav>
       
-        <a href="https://github.com/dylanparsons" class="md-author" title="@dylanparsons">
+        <a href="https://github.com/madhavcodez" class="md-author" title="@madhavcodez">
           
-          <img src="https://avatars.githubusercontent.com/u/17061193?v=4&size=72" alt="dylanparsons">
+          <img src="https://avatars.githubusercontent.com/u/171856020?v=4&size=72" alt="madhavcodez">
         </a>
       
         <a href="https://github.com/web-flow" class="md-author" title="@web-flow">
@@ -5628,14 +5614,14 @@
           <img src="https://avatars.githubusercontent.com/u/19864447?v=4&size=72" alt="web-flow">
         </a>
       
+        <a href="https://github.com/dylanparsons" class="md-author" title="@dylanparsons">
+          
+          <img src="https://avatars.githubusercontent.com/u/17061193?v=4&size=72" alt="dylanparsons">
+        </a>
+      
         <a href="https://github.com/Borda" class="md-author" title="@Borda">
           
           <img src="https://avatars.githubusercontent.com/u/6035284?v=4&size=72" alt="Borda">
-        </a>
-      
-        <a href="https://github.com/RubenHaisma" class="md-author" title="@RubenHaisma">
-          
-          <img src="https://avatars.githubusercontent.com/u/74268046?v=4&size=72" alt="RubenHaisma">
         </a>
       
       
