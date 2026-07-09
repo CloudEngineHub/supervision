@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../assets/supervision-lenny.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -705,6 +705,63 @@
     
   
   Cookbooks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../code_of_conduct/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Code of Conduct
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../license/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  License
 
       </a>
     </li>
@@ -1695,7 +1752,7 @@
   <span class="md-ellipsis">
     
   
-    VLMs
+    VLM Utils
   
 
     
@@ -2547,6 +2604,41 @@
   
   
     <li class="md-nav__item">
+      <a href="../utils/conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conversion
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--new"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../utils/video/" class="md-nav__link">
         
   
@@ -2819,6 +2911,87 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_of_conduct/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code of Conduct
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -2831,10 +3004,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
             
   
   
@@ -2852,8 +3025,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3112,13 +3285,13 @@
 <h2 id="what-can-i-do-with-supervision">What can I do with Supervision?<a class="headerlink" href="#what-can-i-do-with-supervision" title="Permanent link">&para;</a></h2>
 <p>You can annotate images and video, filter detections, track objects, count objects in zones or across lines, load and convert datasets, evaluate models with detection metrics, and export predictions for downstream analysis.</p>
 <h2 id="how-do-i-track-objects-across-video-frames">How do I track objects across video frames?<a class="headerlink" href="#how-do-i-track-objects-across-video-frames" title="Permanent link">&para;</a></h2>
-<p>Assign persistent tracker IDs before visualization. The built-in <code>sv.ByteTrack</code> wrapper accepts <code>Detections</code> through <code>update_with_detections()</code>. After tracking, combine the output with annotators such as <code>sv.TraceAnnotator</code>, <code>sv.BoxAnnotator</code>, and <code>sv.LabelAnnotator</code>.</p>
+<p>Assign persistent tracker IDs before visualization. The built-in <code>sv.ByteTrack</code> wrapper accepts <code>Detections</code> through <code>update_with_detections()</code>, but it is deprecated in favor of <code>ByteTrackTracker</code> from the external <code>trackers</code> package. After tracking, combine the output with annotators such as <code>sv.TraceAnnotator</code>, <code>sv.BoxAnnotator</code>, and <code>sv.LabelAnnotator</code>.</p>
 <h2 id="what-dataset-formats-does-supervision-support">What dataset formats does Supervision support?<a class="headerlink" href="#what-dataset-formats-does-supervision-support" title="Permanent link">&para;</a></h2>
 <p>For detection datasets, Supervision supports YOLO, COCO JSON, Pascal VOC, CreateML, and LabelMe. Use <code>DetectionDataset.from_yolo()</code>, <code>DetectionDataset.from_coco()</code>, <code>DetectionDataset.from_pascal_voc()</code>, <code>DetectionDataset.from_createml()</code>, or <code>DetectionDataset.from_labelme()</code> to load datasets, and the matching <code>as_*</code> methods to export them.</p>
 <h2 id="how-do-i-count-objects-in-a-zone">How do I count objects in a zone?<a class="headerlink" href="#how-do-i-count-objects-in-a-zone" title="Permanent link">&para;</a></h2>
 <p>Use <code>sv.PolygonZone</code> for arbitrary polygon regions and <code>sv.LineZone</code> for line-crossing counts. Line crossing requires <code>detections.tracker_id</code>, so run a tracker before calling the line zone trigger.</p>
 <h2 id="how-do-i-benchmark-a-model">How do I benchmark a model?<a class="headerlink" href="#how-do-i-benchmark-a-model" title="Permanent link">&para;</a></h2>
-<p>Use <code>supervision.metrics.mean_average_precision.MeanAveragePrecision</code> for mAP and <code>sv.ConfusionMatrix</code> for confusion matrices. Accumulate predictions and ground-truth <code>Detections</code>, then call <code>compute()</code> to calculate metrics.</p>
+<p>Install <code>supervision[metrics]</code>, then use <code>supervision.metrics.mean_average_precision.MeanAveragePrecision</code> for mAP and <code>sv.ConfusionMatrix</code> for confusion matrices. Accumulate predictions and ground-truth <code>Detections</code>, then call <code>compute()</code> to calculate metrics.</p>
 <h2 id="is-supervision-free-to-use">Is Supervision free to use?<a class="headerlink" href="#is-supervision-free-to-use" title="Permanent link">&para;</a></h2>
 <p>Yes. Supervision is free and open source under the MIT license.</p>
 <h2 id="where-is-the-source-code">Where is the source code?<a class="headerlink" href="#where-is-the-source-code" title="Permanent link">&para;</a></h2>
@@ -3145,7 +3318,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="June 25, 2026 15:07:39 UTC">June 25, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 8, 2026 12:30:32 UTC">July 8, 2026</span>
   </span>
 
     
@@ -3173,9 +3346,9 @@
     
     <nav>
       
-        <a href="https://github.com/madhavcodez" class="md-author" title="@madhavcodez">
+        <a href="https://github.com/Borda" class="md-author" title="@Borda">
           
-          <img src="https://avatars.githubusercontent.com/u/171856020?v=4&size=72" alt="madhavcodez">
+          <img src="https://avatars.githubusercontent.com/u/6035284?v=4&size=72" alt="Borda">
         </a>
       
         <a href="https://github.com/web-flow" class="md-author" title="@web-flow">
@@ -3183,21 +3356,21 @@
           <img src="https://avatars.githubusercontent.com/u/19864447?v=4&size=72" alt="web-flow">
         </a>
       
-        <a href="https://github.com/Borda" class="md-author" title="@Borda">
+        <a href="https://github.com/madhavcodez" class="md-author" title="@madhavcodez">
           
-          <img src="https://avatars.githubusercontent.com/u/6035284?v=4&size=72" alt="Borda">
+          <img src="https://avatars.githubusercontent.com/u/171856020?v=4&size=72" alt="madhavcodez">
         </a>
       
-        <a href="https://github.com/claude%5Bbot%5D" class="md-author" title="@claude[bot]">
+        <a href="https://github.com/codex" class="md-author" title="@codex">
           
-          <img src="https://avatars.githubusercontent.com/in/1236702?v=4&size=72" alt="GitHub user">
+          <img src="https://avatars.githubusercontent.com/u/267193182?u=8d933ea4ecf726d71bfa940532b8cf8f04ee0ab3&v=4&size=72" alt="Codex">
         </a>
       
       
       
         
           <a href="https://github.com/roboflow/supervision/tree/main/docs/faq.md" class="md-author md-author--more">
-            +3
+            +4
           </a>
         
       
